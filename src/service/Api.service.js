@@ -1,17 +1,21 @@
-import axios from 'axios'
-const baseURL = process.env.REACT_APP_BASE_URI || "http://stage.whgstage.com/front-end-test/"
+import axios from 'axios';
 
-console.log({ baseURL })
+const baseURL = process.env.REACT_APP_BASE_URI || "http://stage.whgstage.com/front-end-test/";
 
-const Api = axios.create({ baseURL })
+const Api = axios.create({ baseURL });
 
-Api.interceptors.request.use((config) => config, (error) => {
-    return Promise.reject(error)
-});
+Api.interceptors.request.use(
+  (config) => config,
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
-
-Api.interceptors.response.use((response) => response, (error) => {
-    return Promise.reject(error)
-})
+Api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default Api;

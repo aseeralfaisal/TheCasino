@@ -1,5 +1,4 @@
-import { Suspense, useContext, useEffect, useState } from 'react';
-import Api from '../../service/Api.service';
+import React, { Suspense, useContext, useEffect, useState } from 'react';
 import PlayButtonSVG from '../../assets/play.button.jsx';
 import HeaderContext from '../../contexts/Header.context';
 import {
@@ -14,9 +13,9 @@ import {
     Ribbon,
     RibbonText,
 } from './GameGrid.styles';
+import Api from '../../service/Api.service';
 
-
-const RenderGridItems = ({ activeHeader, gamesData, jackpotsData }) => {
+export const RenderGridItems = ({ activeHeader, gamesData, jackpotsData }) => {
     const [thumbnailHover, setThumbnailHover] = useState(false);
     const [currentGameId, setCurrentGameId] = useState(null);
 
@@ -56,7 +55,7 @@ const RenderGridItems = ({ activeHeader, gamesData, jackpotsData }) => {
 
 
         return (
-            <BoxContainer key={index}>
+            <BoxContainer data-testid="Container" key={index}>
                 <Box>
                     <GameThumbnailContainer
                         onMouseEnter={() => handleMouseEnter(game.id)}
@@ -89,8 +88,6 @@ const RenderGridItems = ({ activeHeader, gamesData, jackpotsData }) => {
         );
     });
 };
-
-
 
 const GameGrid = () => {
     const [gamesData, setGamesData] = useState([])
