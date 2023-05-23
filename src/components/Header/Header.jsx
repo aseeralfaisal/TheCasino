@@ -12,7 +12,7 @@ const Header = () => {
   const isActiveHeader = (category) => category.split(' ')[0] === activeHeader;
   const handleHeaderClick = (category) => setActiveHeader(category.split(' ')[0]);
 
-  const [isMenuOpen, setMenuOpen] = useState(false);
+  const [isMenuOpen, setMenuOpen] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Header = () => {
   }, []);
 
   const toggleMenu = () => {
-    if (windowWidth < 970) {
+    if (windowWidth <= 927) {
       setMenuOpen(!isMenuOpen);
     }
   };
@@ -50,7 +50,7 @@ const Header = () => {
           {isMenuOpen ? '✕' : '☰'}
         </MenuBar>
       </Container>
-      {windowWidth < 973 ? isMenuOpen && categorieItems : categorieItems}
+      {windowWidth <= 927 ? isMenuOpen && categorieItems : categorieItems}
     </Container>
   );
 };
