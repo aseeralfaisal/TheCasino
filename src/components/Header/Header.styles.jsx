@@ -9,7 +9,7 @@ const Container = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: center;
-    padding-top: 16px; /* Add padding to the top */
+    padding-top: 16px; 
   }
 `;
 
@@ -33,7 +33,7 @@ const HeaderTitle = styled.label`
   @media (max-width: 768px) {
     font-size: 20px;
     padding: 12px;
-    margin-top: 8px; /* Add margin to the top */
+    margin-top: 8px;
   }
 `;
 

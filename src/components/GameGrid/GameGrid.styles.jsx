@@ -7,15 +7,15 @@ const GridContainer = styled.div`
     padding: 40px;
     grid-gap: 40px; 
 
-  @media (max-width: 1200px) {
+  @media (max-width: 1400px) {
     grid-template-columns: repeat(4, 1fr);
   }
 
-  @media (max-width: 992px) {
+  @media (max-width: 1150px) {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 850px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
