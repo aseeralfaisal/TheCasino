@@ -20,6 +20,30 @@ import {
 export const RenderGridItems = ({ activeHeader, gamesData, jackpotsData }) => {
     const [thumbnailHover, setThumbnailHover] = useState(false);
     const [currentGameId, setCurrentGameId] = useState(null);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const handleMouseEnter = (gameId) => {
+        if (windowWidth > 768) {
+            setCurrentGameId(gameId);
+            setThumbnailHover(true);
+        }
+    };
+
+    const handleMouseLeave = () => {
+        setThumbnailHover(false);
+    };
 
     let data = null;
 
@@ -33,15 +57,6 @@ export const RenderGridItems = ({ activeHeader, gamesData, jackpotsData }) => {
         );
     }
 
-    const handleMouseEnter = (gameId) => {
-        setCurrentGameId(gameId);
-        setThumbnailHover(true);
-    };
-
-    const handleMouseLeave = () => {
-        setThumbnailHover(false);
-    }
-
     return data.map((game, index) => {
         let ribbonText = null;
 
@@ -51,10 +66,8 @@ export const RenderGridItems = ({ activeHeader, gamesData, jackpotsData }) => {
             ribbonText = 'New';
         }
 
-
-        const isThumbnailHovered = thumbnailHover && currentGameId === game.id
-        const jackpotData = jackpotsData.find((jackpot) => jackpot.game === game.id)
-
+        const isThumbnailHovered = thumbnailHover && currentGameId === game.id;
+        const jackpotData = jackpotsData.find((jackpot) => jackpot.game === game.id);
 
         return (
             <BoxContainer data-testid="Container" key={index}>
@@ -80,8 +93,10 @@ export const RenderGridItems = ({ activeHeader, gamesData, jackpotsData }) => {
                         </JackPotContainer>
                         <GameThumbnail src={game.image} alt="" />
                         {ribbonText && (
-                            <Ribbon position={ribbonText.includes("New") ? "right" : "left"}>
-                                <RibbonText position={ribbonText.includes("New") ? "right" : "left"}>{ribbonText}</RibbonText>
+                            <Ribbon position={ribbonText.includes('New') ? 'right' : 'left'}>
+                                <RibbonText position={ribbonText.includes('New') ? 'right' : 'left'}>
+                                    {ribbonText}
+                                </RibbonText>
                             </Ribbon>
                         )}
                     </GameThumbnailContainer>
@@ -92,41 +107,41 @@ export const RenderGridItems = ({ activeHeader, gamesData, jackpotsData }) => {
 };
 
 const GameGrid = () => {
-    const [gamesData, setGamesData] = useState([])
-    const [jackpotsData, setJackpotsData] = useState([])
-    const { activeHeader } = useContext(HeaderContext)
+    const [gamesData, setGamesData] = useState([]);
+    const [jackpotsData, setJackpotsData] = useState([]);
+    const { activeHeader } = useContext(HeaderContext);
 
     useEffect(() => {
         const fetchGamesData = async () => {
             try {
-                const response = await Api.get('games.php')
-                setGamesData(response.data)
+                const response = await Api.get('games.php');
+                setGamesData(response.data);
             } catch (error) {
-                console.error('Error fetching games data:', error)
+                console.error('Error fetching games data:', error);
             }
-        }
+        };
 
-        fetchGamesData()
-    }, [])
+        fetchGamesData();
+    }, []);
 
     useEffect(() => {
         const fetchJackpotsData = async () => {
             try {
-                const response = await Api.get('jackpots.php')
-                setJackpotsData(response.data)
+                const response = await Api.get('jackpots.php');
+                setJackpotsData(response.data);
             } catch (error) {
-                console.error('Error fetching games data:', error)
+                console.error('Error fetching games data:', error);
             }
-        }
+        };
 
         fetchJackpotsData();
 
         const interval = setInterval(fetchJackpotsData, 3000);
 
         return () => {
-            clearInterval(interval)
-        }
-    }, [])
+            clearInterval(interval);
+        };
+    }, []);
 
     return (
         <Suspense fallback={<label>Loading...</label>}>
@@ -134,7 +149,7 @@ const GameGrid = () => {
                 <RenderGridItems activeHeader={activeHeader} gamesData={gamesData} jackpotsData={jackpotsData} />
             </GridContainer>
         </Suspense>
-    )
-}
+    );
+};
 
-export default GameGrid
+export default GameGrid;

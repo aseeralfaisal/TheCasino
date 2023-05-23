@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import HeaderContext from '../../contexts/Header.context';
 import { Container, HeaderTitle, MenuBar } from './Header.styles';
 
@@ -13,10 +13,35 @@ const Header = () => {
   const handleHeaderClick = (category) => setActiveHeader(category.split(' ')[0]);
 
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const toggleMenu = () => {
-    setMenuOpen(!isMenuOpen);
+    if (windowWidth < 970) {
+      setMenuOpen(!isMenuOpen);
+    }
   };
+
+  const categorieItems = categories.map((category, index) => (
+    <HeaderTitle
+      key={index}
+      active={isActiveHeader(category) ? 'active' : ''}
+      onClick={() => handleHeaderClick(category)}
+    >
+      {category}
+    </HeaderTitle>
+  ))
 
   return (
     <Container>
@@ -25,15 +50,7 @@ const Header = () => {
           {isMenuOpen ? '✕' : '☰'}
         </MenuBar>
       </Container>
-      {categories.map((category, index) => (
-        <HeaderTitle
-          key={index}
-          active={isActiveHeader(category) ? 'active' : ''}
-          onClick={() => handleHeaderClick(category)}
-        >
-          {category}
-        </HeaderTitle>
-      ))}
+      {windowWidth < 973 ? isMenuOpen && categorieItems : categorieItems}
     </Container>
   );
 };
