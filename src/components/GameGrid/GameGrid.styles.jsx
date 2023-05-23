@@ -115,7 +115,21 @@ const GameLabel = styled.span`
   color: ${colors.white};
   cursor: context-menu;
 `
+const JackPotAmount = styled.span`
+  position: absolute;
+  color: ${colors.white};
+  font-size: 18px;
+  margin-top: 4px;
+  font-weight: bold;
+`;
+
+const JackPotContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  z-index: 20;
+`;
+
 export {
-  GridContainer, GameThumbnail, Box, Ribbon, BoxContainer, GameLabel,
-  GameThumbnailContainer, RibbonText, PlayButtonContainer, HoverLayer
+  GridContainer, GameThumbnail, Box, Ribbon, BoxContainer, GameLabel, JackPotAmount,
+  JackPotContainer, GameThumbnailContainer, RibbonText, PlayButtonContainer, HoverLayer
 }

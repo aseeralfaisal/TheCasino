@@ -1,4 +1,5 @@
 import React, { Suspense, useContext, useEffect, useState } from 'react';
+import Api from '../../service/Api.service';
 import PlayButtonSVG from '../../assets/play.button.jsx';
 import HeaderContext from '../../contexts/Header.context';
 import {
@@ -9,11 +10,12 @@ import {
     GameThumbnailContainer,
     GridContainer,
     HoverLayer,
+    JackPotAmount,
+    JackPotContainer,
     PlayButtonContainer,
     Ribbon,
     RibbonText,
 } from './GameGrid.styles';
-import Api from '../../service/Api.service';
 
 export const RenderGridItems = ({ activeHeader, gamesData, jackpotsData }) => {
     const [thumbnailHover, setThumbnailHover] = useState(false);
@@ -38,7 +40,7 @@ export const RenderGridItems = ({ activeHeader, gamesData, jackpotsData }) => {
 
     const handleMouseLeave = () => {
         setThumbnailHover(false);
-    };
+    }
 
     return data.map((game, index) => {
         let ribbonText = null;
@@ -73,9 +75,9 @@ export const RenderGridItems = ({ activeHeader, gamesData, jackpotsData }) => {
                                 </HoverLayer>
                             </>
                         )}
-                        <div style={{ display: 'flex', justifyContent: 'center', zIndex: 20 }}>
-                            {jackpotData && <div style={{ position: 'absolute', color: '#fff', fontSize: 18, marginTop: 4, fontWeight: 'bold' }}>${jackpotData.amount}</div>}
-                        </div>
+                        <JackPotContainer>
+                            {jackpotData && <JackPotAmount>${jackpotData.amount}</JackPotAmount>}
+                        </JackPotContainer>
                         <GameThumbnail src={game.image} alt="" />
                         {ribbonText && (
                             <Ribbon position={ribbonText.includes("New") ? "right" : "left"}>
