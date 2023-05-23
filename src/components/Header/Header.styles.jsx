@@ -18,7 +18,14 @@ const HeaderTitle = styled.label`
   font-size: 24px;
   padding: 16px;
   text-transform: capitalize;
-  background-color: ${(props) => (props.active ? colors.lime : colors.gray)};
+  background-color: ${colors.gray};
+
+  ${(props) =>
+    props.active &&
+    `
+    background-color: ${colors.lime};
+  `}
+
   &:hover {
     background-color: ${colors.lime};
   }
